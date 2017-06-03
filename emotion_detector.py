@@ -6,10 +6,7 @@ import re
 import logging
 import sys
 import csv
-
-# Change this path as per your working directory
-TWEETS_FILE_PATH = "C:\Users\AKSHAYA\Desktop"
-LOG_FILE_PATH = "C:\Users\AKSHAYA\Desktop"
+import argparse
 
 # The dict of adjectives and their corresponding emotion values can be expanded. I have added few for example
 ADJECTIVE_EMOTION_VALUES = {"athletic": [4.05, 1.91, 1.77, 1.56, 1.36],
@@ -1244,8 +1241,13 @@ if __name__ == "__main__":
     # filename = input("Enter filename containing tweets: ")
     sys.maxunicode = 1114111
     try:
-        # hard code filename below and create this file in the same directory where this script is kept
-        f = open(name="e.txt", mode="r")
+        parser = argparse.ArgumentParser()
+        required_arg = parser.add_argument_group("Required Named Arguments")
+        required_arg.add_argument("--file", help="Enter tweets file name", required=True)
+        args = parser.parse_args()
+        file_name = args.file
+
+        f = open(name=file_name, mode="r")
         lines = f.readlines()
         tweets = []
         for line in lines:
